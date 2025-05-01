@@ -1,6 +1,7 @@
 package data;
 
 public class PrevisaoDoTempo {
+    private String cidade;
     private String minima;
     private String maxima;
     private int dia;
@@ -8,11 +9,20 @@ public class PrevisaoDoTempo {
     private String descricaoDoClima;
 
     public PrevisaoDoTempo() {
+        this.cidade = "";
         this.minima = "";
         this.maxima = "";
         this.dia = 0;
         this.diaDaSemana = "";
         this.descricaoDoClima = "";
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getMinima() {

@@ -16,7 +16,7 @@ public class Scraper {
         List<PrevisaoDoTempo> previsoes = new ArrayList<>();
 
         try {
-            Document doc = Jsoup.connect(BASE_URL + "/" + idCidade + "/" + nomeCidade).get();
+            Document doc = Jsoup.connect(BASE_URL + idCidade + "/" + nomeCidade).get();
 
             Element blocoPrincipal = doc.getElementById("first-block-of-days");
 
@@ -24,6 +24,7 @@ public class Scraper {
 
             if (tituloCidade != null) {
                 System.out.println(tituloCidade.text());
+
             } else {
                 System.out.println("Título não encontrado!");
             }
@@ -34,7 +35,8 @@ public class Scraper {
             for (Element secao : secoesDias) {
                 PrevisaoDoTempo previsaoDoTempo = new PrevisaoDoTempo();
 
-                //Pegando datas
+                previsaoDoTempo.setCidade(tituloCidade.ownText().replaceFirst("^Previsão para 15 dias\\s*", ""));
+
                 Element data = secao.selectFirst(".date-inside-circle");
                 if (data != null) {
                     int numeroDia = Integer.parseInt(data.ownText().trim());
@@ -44,7 +46,6 @@ public class Scraper {
                     previsaoDoTempo.setDiaDaSemana(diaSemana);
                 }
 
-                // Pegando temperaturas
                 Element imgMinima = secao.selectFirst("img[alt='Temperatura mínima']");
                 if (imgMinima != null) {
                     Element spanMinima = imgMinima.parent().selectFirst("span");
